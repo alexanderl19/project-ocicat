@@ -13,6 +13,7 @@ export default (request: VercelRequest, response: VercelResponse) => {
         course_offering: {
           course: {
             department: string;
+            department_name: string;
           };
         };
       }[];
@@ -26,6 +27,7 @@ export default (request: VercelRequest, response: VercelResponse) => {
           course_offering {
             course {
               department
+              department_name
             }
           }
         }
@@ -36,12 +38,15 @@ export default (request: VercelRequest, response: VercelResponse) => {
   graphqlRequest("https://api.peterportal.org/graphql/", query).then(
     (data: Response) => {
       const allDepartments = Array.from(
-        new Set(
-          data.grades.grade_distributions.map(
-            (gradeDistribution) =>
-              gradeDistribution.course_offering.course.department
-          )
-        )
+        data.grades.grade_distributions
+          .reduce((allDepartments, gradeDistribution) => {
+            allDepartments.set(
+              gradeDistribution.course_offering.course.department,
+              gradeDistribution.course_offering.course
+            );
+            return allDepartments;
+          }, new Map())
+          .values()
       );
       response.status(200).send(allDepartments);
     }

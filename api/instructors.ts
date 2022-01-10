@@ -9,6 +9,7 @@ export default (request: VercelRequest, response: VercelResponse) => {
 
   interface Response {
     allInstructors: {
+      name: string;
       shortened_name: string;
     }[];
   }
@@ -16,6 +17,7 @@ export default (request: VercelRequest, response: VercelResponse) => {
   const query = gql`
     {
       allInstructors {
+        name
         shortened_name
       }
     }
@@ -24,7 +26,7 @@ export default (request: VercelRequest, response: VercelResponse) => {
   graphqlRequest("https://api.peterportal.org/graphql/", query).then(
     (data: Response) => {
       const allInstructors = data.allInstructors.map(
-        (instructor) => instructor.shortened_name
+        (instructor) => instructor
       );
       response.status(200).send(allInstructors);
     }
