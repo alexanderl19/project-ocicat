@@ -49,9 +49,6 @@
     ]
   },
   "devDependencies": {
-    "@iconify-json/ion": "^1.0.3",
-    "@svgr/core": "^6.2.0",
-    "@vercel/node": "^1.12.1",
-    "unplugin-icons": "^0.13.0"
+    "@vercel/node": "^1.12.1"
   }
 }
