@@ -3,12 +3,15 @@ import { FormControl, FormLabel } from "@chakra-ui/react";
 import AsyncSelect from "react-select/async";
 import Fuse from "fuse.js";
 
-interface Department {
-  department: string;
-  department_name: string;
+import { Department } from "../../../interfaces/inputs.interface";
+import { Props } from "react-select";
+
+export declare interface DepartmentsProps {
+  departments: Department[];
+  onChange: Props["onChange"];
 }
 
-class Departments extends React.Component {
+class Departments extends React.Component<DepartmentsProps> {
   fuse: Fuse<unknown> | undefined;
   options: any;
 
@@ -41,6 +44,8 @@ class Departments extends React.Component {
           id="departments"
           isMulti
           name="departments"
+          value={this.props.departments}
+          onChange={this.props.onChange}
           cacheOptions
           defaultOptions
           loadOptions={this.promiseOptions}

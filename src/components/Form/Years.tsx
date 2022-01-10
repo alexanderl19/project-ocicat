@@ -3,9 +3,14 @@ import { FormControl, FormLabel } from "@chakra-ui/react";
 import AsyncSelect from "react-select/async";
 import Fuse from "fuse.js";
 
-type Year = string;
+import { Year } from "../../../interfaces/inputs.interface";
+import { Props } from "react-select";
 
-class Years extends React.Component {
+export declare interface YearsProps {
+  years: Year[];
+  onChange: Props["onChange"];
+}
+class Years extends React.Component<YearsProps> {
   fuse: Fuse<unknown> | undefined;
   options: any;
 
@@ -38,6 +43,8 @@ class Years extends React.Component {
           id="years"
           isMulti
           name="years"
+          value={this.props.years}
+          onChange={this.props.onChange}
           cacheOptions
           defaultOptions
           loadOptions={this.promiseOptions}

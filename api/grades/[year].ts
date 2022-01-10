@@ -10,14 +10,14 @@ export default (request: VercelRequest, response: VercelResponse) => {
   interface Response {
     grades: {
       grade_distributions: {
-        grade_a_count: string;
-        grade_b_count: string;
-        grade_c_count: string;
-        grade_d_count: string;
-        grade_f_count: string;
-        grade_p_count: string;
-        grade_np_count: string;
-        grade_w_count: string;
+        grade_a_count: number;
+        grade_b_count: number;
+        grade_c_count: number;
+        grade_d_count: number;
+        grade_f_count: number;
+        grade_p_count: number;
+        grade_np_count: number;
+        grade_w_count: number;
         course_offering: {
           section: {
             code: string;
@@ -78,6 +78,14 @@ export default (request: VercelRequest, response: VercelResponse) => {
         (gradeDistribution) => {
           const courseOffering = gradeDistribution.course_offering;
           return {
+            grade_a_count: gradeDistribution.grade_a_count,
+            grade_b_count: gradeDistribution.grade_b_count,
+            grade_c_count: gradeDistribution.grade_c_count,
+            grade_d_count: gradeDistribution.grade_d_count,
+            grade_f_count: gradeDistribution.grade_f_count,
+            grade_p_count: gradeDistribution.grade_p_count,
+            grade_np_count: gradeDistribution.grade_np_count,
+            grade_w_count: gradeDistribution.grade_w_count,
             instructors: courseOffering.instructors.map(
               (instructor) => instructor.shortened_name
             ),

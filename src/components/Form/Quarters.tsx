@@ -3,9 +3,14 @@ import { FormControl, FormLabel } from "@chakra-ui/react";
 import AsyncSelect from "react-select/async";
 import Fuse from "fuse.js";
 
-type Quarter = string;
+import { Quarter } from "../../../interfaces/inputs.interface";
+import { Props } from "react-select";
 
-class Quarters extends React.Component {
+export declare interface QuartersProps {
+  quarters: Quarter[];
+  onChange: Props["onChange"];
+}
+class Quarters extends React.Component<QuartersProps> {
   fuse: Fuse<unknown> | undefined;
   options: any;
 
@@ -38,6 +43,8 @@ class Quarters extends React.Component {
           id="quarters"
           isMulti
           name="quarters"
+          value={this.props.quarters}
+          onChange={this.props.onChange}
           cacheOptions
           defaultOptions
           loadOptions={this.promiseOptions}

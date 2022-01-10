@@ -3,12 +3,15 @@ import { FormControl, FormLabel } from "@chakra-ui/react";
 import AsyncSelect from "react-select/async";
 import Fuse from "fuse.js";
 
-interface Instructor {
-  name: string;
-  shortened_name: string;
+import { Instructor } from "../../../interfaces/inputs.interface";
+import { Props } from "react-select";
+
+export declare interface InstructorsProps {
+  instructors: Instructor[];
+  onChange: Props["onChange"];
 }
 
-class Instructors extends React.Component {
+class Instructors extends React.Component<InstructorsProps> {
   fuse: Fuse<unknown> | undefined;
   options: any;
 
@@ -41,6 +44,8 @@ class Instructors extends React.Component {
           id="instructors"
           isMulti
           name="instructors"
+          value={this.props.instructors}
+          onChange={this.props.onChange}
           cacheOptions
           defaultOptions
           loadOptions={this.promiseOptions}
