@@ -27,7 +27,7 @@ class Departments extends React.Component<DepartmentsProps> {
     if (!this.fuse) {
       this.options = await this.getOptions();
       const fuseOptions = {
-        keys: ["department.department", "department.department_name"],
+        keys: ["value.department", "value.department_name"],
         sortFn: (a: any, b: any) => b - a,
       };
       this.fuse = new Fuse(this.options, fuseOptions);
