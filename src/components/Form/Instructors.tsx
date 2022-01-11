@@ -19,7 +19,13 @@ class Instructors extends React.Component<InstructorsProps> {
     const instructors = await fetch("/api/instructors");
     const instructorsJSON: Instructor[] = await instructors.json();
     return instructorsJSON.map((instructor) => {
-      return { value: instructor, label: instructor.name };
+      return {
+        value: {
+          ...instructor,
+          lastName: instructor.shortened_name.split(",")[0],
+        },
+        label: instructor.name,
+      };
     });
   };
 
@@ -27,8 +33,22 @@ class Instructors extends React.Component<InstructorsProps> {
     if (!this.fuse) {
       this.options = await this.getOptions();
       const fuseOptions = {
-        keys: ["value.name", "value.shortened_name"],
-        sortFn: (a: any, b: any) => b - a,
+        includeScore: true,
+        useExtendedSearch: true,
+        keys: [
+          {
+            name: "value.name",
+            weight: 0.15,
+          },
+          {
+            name: "value.lastName",
+            weight: 0.7,
+          },
+          {
+            name: "value.shortened_name",
+            weight: 0.15,
+          },
+        ],
       };
       this.fuse = new Fuse(this.options, fuseOptions);
       return this.options;
