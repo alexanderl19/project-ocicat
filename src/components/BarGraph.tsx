@@ -7,6 +7,8 @@ import {
   Title,
   Tooltip,
   Legend,
+  ChartOptions,
+  ChartData,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 
@@ -36,7 +38,7 @@ export declare interface GraphProps {
   class: string;
 }
 
-class Graph extends React.Component<GraphProps> {
+class BarGraph extends React.Component<GraphProps> {
   grades: Grade[] = [];
 
   componentDidMount() {
@@ -127,11 +129,11 @@ class Graph extends React.Component<GraphProps> {
     });
 
     const labels = ["A", "B", "C", "D", "F", "P", "NP"];
-    const sumFilteredGrades = {
+    const sumFilteredGrades: ChartData<"bar"> = {
       labels,
       datasets: [
         {
-          label: "Dataset 1",
+          label: "",
           data: [
             filteredGrades.reduce(
               (output, grade) => output + grade.grade_a_count,
@@ -162,20 +164,27 @@ class Graph extends React.Component<GraphProps> {
               0
             ),
           ],
+
           backgroundColor: "rgba(255, 99, 132, 0.5)",
+          borderRadius: 4,
+          hoverBackgroundColor: "rgba(255, 99, 132, 0.70)",
         },
       ],
     };
 
-    const options = {
+    const options: ChartOptions<"bar"> = {
       responsive: true,
       plugins: {
-        legend: {
-          position: "top" as const,
-        },
-        title: {
-          display: true,
-          text: "Chart.js Bar Chart",
+        title: { display: false },
+        legend: { display: false },
+        tooltip: {
+          caretSize: 0,
+          padding: 12,
+          cornerRadius: 5,
+          backgroundColor: "rgba(0, 0, 0, 0.95)",
+          titleFont: { size: 12 },
+          bodyFont: { size: 12 },
+          displayColors: false,
         },
       },
     };
@@ -186,4 +195,4 @@ class Graph extends React.Component<GraphProps> {
   }
 }
 
-export default Graph;
+export default BarGraph;

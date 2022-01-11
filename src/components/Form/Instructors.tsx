@@ -34,19 +34,18 @@ class Instructors extends React.Component<InstructorsProps> {
       this.options = await this.getOptions();
       const fuseOptions = {
         includeScore: true,
-        useExtendedSearch: true,
         keys: [
           {
             name: "value.name",
-            weight: 0.15,
+            weight: 0.25,
           },
           {
             name: "value.lastName",
-            weight: 0.7,
+            weight: 0.5,
           },
           {
             name: "value.shortened_name",
-            weight: 0.15,
+            weight: 0.25,
           },
         ],
       };

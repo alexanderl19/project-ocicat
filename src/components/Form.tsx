@@ -3,6 +3,7 @@ import Instructors from "./Form/Instructors";
 import Quarters from "./Form/Quarters";
 import Years from "./Form/Years";
 import Departments from "./Form/Departments";
+import GradesOverTime from "./Form/GradesOverTime";
 import {
   SimpleGrid,
   FormControl,
@@ -32,7 +33,9 @@ export declare interface FormProps {
   departments: Department[];
   course: string;
   class: string;
+  gradesOverTime: boolean;
   onFormChange: OnFormChange;
+  onSwitchChange: any;
   handleReactSelectChange: Props["onChange"];
 }
 
@@ -78,6 +81,10 @@ class Form extends React.Component<FormProps> {
           />
           <FormHelperText>(E.g. 12345)</FormHelperText>
         </FormControl>
+        <GradesOverTime
+          value={this.props.gradesOverTime}
+          onSwitchChange={this.props.onSwitchChange}
+        />
       </SimpleGrid>
     );
   }

@@ -1,7 +1,8 @@
 import React from "react";
 import Header from "./components/Header";
 import Form from "./components/Form";
-import Graph from "./components/Graph";
+import BarGraph from "./components/BarGraph";
+import LineChart from "./components/LineChart";
 import "./App.css";
 import { Center, Box } from "@chakra-ui/react";
 import { ActionMeta } from "react-select";
@@ -14,6 +15,7 @@ class App extends React.Component {
     departments: [],
     course: "",
     class: "",
+    gradesOverTime: false,
   };
 
   handleChange = (event: { target: { name?: string; value: any } }) => {
@@ -24,6 +26,11 @@ class App extends React.Component {
       this.setState({
         [name]: target.value,
       });
+  };
+
+  handleSwitchChange = () => {
+    // @ts-ignore
+    this.setState((state) => ({ gradesOverTime: !state.gradesOverTime }));
   };
 
   handleReactSelectChange = (
@@ -49,23 +56,48 @@ class App extends React.Component {
           departments={this.state.departments}
           course={this.state.course}
           class={this.state.class}
+          gradesOverTime={this.state.gradesOverTime}
           onFormChange={this.handleChange}
+          onSwitchChange={this.handleSwitchChange}
           handleReactSelectChange={this.handleReactSelectChange}
         />
         <Center>
           <Box w="full" maxW="container.md" py="8">
-            <Graph
-              // @ts-ignore
-              instructors={this.state.instructors.map((option) => option.value)}
-              // @ts-ignore
-              quarters={this.state.quarters.map((option) => option.value)}
-              // @ts-ignore
-              years={this.state.years.map((option) => option.value)}
-              // @ts-ignore
-              departments={this.state.departments.map((option) => option.value)}
-              course={this.state.course}
-              class={this.state.class}
-            />
+            {this.state.gradesOverTime ? (
+              <LineChart
+                instructors={this.state.instructors.map(
+                  // @ts-ignore
+                  (option) => option.value
+                )}
+                // @ts-ignore
+                quarters={this.state.quarters.map((option) => option.value)}
+                // @ts-ignore
+                years={this.state.years.map((option) => option.value)}
+                departments={this.state.departments.map(
+                  // @ts-ignore
+                  (option) => option.value
+                )}
+                course={this.state.course}
+                class={this.state.class}
+              />
+            ) : (
+              <BarGraph
+                instructors={this.state.instructors.map(
+                  // @ts-ignore
+                  (option) => option.value
+                )}
+                // @ts-ignore
+                quarters={this.state.quarters.map((option) => option.value)}
+                // @ts-ignore
+                years={this.state.years.map((option) => option.value)}
+                departments={this.state.departments.map(
+                  // @ts-ignore
+                  (option) => option.value
+                )}
+                course={this.state.course}
+                class={this.state.class}
+              />
+            )}
           </Box>
         </Center>
       </div>
